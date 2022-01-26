@@ -4,8 +4,6 @@ github.com/99designs/keyring
 github.com/AthenZ/athenz/clients/go/zts
 github.com/AthenZ/athenz/libs/go/zmssvctoken
 github.com/AthenZ/athenz/libs/go/ztsroletoken
-# github.com/BurntSushi/toml v0.3.1
-## explicit
 # github.com/DataDog/zstd v1.4.6-0.20210211175136-c6db21d202f4
 github.com/DataDog/zstd
 # github.com/Shopify/sarama v1.20.1
@@ -37,7 +35,6 @@ github.com/cespare/xxhash/v2
 # github.com/danieljoos/wincred v1.0.2
 github.com/danieljoos/wincred
 # github.com/davecgh/go-spew v1.1.1
-## explicit
 github.com/davecgh/go-spew/spew
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 github.com/dgrijalva/jwt-go
@@ -72,7 +69,6 @@ github.com/golang/protobuf/ptypes/any
 github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/golang/snappy v0.0.1
-## explicit
 github.com/golang/snappy
 # github.com/gorilla/mux v1.7.4
 ## explicit
@@ -131,8 +127,6 @@ github.com/spaolacci/murmur3
 # github.com/stretchr/testify v1.5.1
 ## explicit
 github.com/stretchr/testify/assert
-# github.com/wvanbergen/kazoo-go v0.0.0-20180202103751-f72d8611297a
-## explicit
 # go.uber.org/atomic v1.7.0
 go.uber.org/atomic
 # golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
@@ -186,8 +180,6 @@ google.golang.org/protobuf/runtime/protoimpl
 google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/timestamppb
-# gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15
-## explicit
 # gopkg.in/natefinch/lumberjack.v2 v2.0.0
 ## explicit
 gopkg.in/natefinch/lumberjack.v2
