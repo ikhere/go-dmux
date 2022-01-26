@@ -18,6 +18,8 @@ const (
 	KafkaHTTP ConnectionType = "kafka_http"
 	//KafkaFoxtrot key to define kafka to foxtrot http sink
 	KafkaFoxtrot ConnectionType = "kafka_foxtrot"
+	//PulsarFoxtrot key to define pulsar to foxtrot http sink
+	PulsarFoxtrot ConnectionType = "pulsar_foxtrot"
 )
 
 func (c ConnectionType) getConfig(data []byte) interface{} {

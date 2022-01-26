@@ -73,7 +73,7 @@ type Source interface {
 	//implementation can write to to this using multiple goroutines
 	//This method is not expected to return, its run in a separate goroutine
 	Generate(out chan<- interface{})
-	//Method used to trigger GracefulStop of Source
+	//Stop method used to trigger GracefulStop of Source
 	Stop()
 }
 
