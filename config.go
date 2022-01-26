@@ -18,8 +18,8 @@ const (
 	KafkaHTTP ConnectionType = "kafka_http"
 	//KafkaFoxtrot key to define kafka to foxtrot http sink
 	KafkaFoxtrot ConnectionType = "kafka_foxtrot"
-	//PulsarFoxtrot key to define pulsar to foxtrot http sink
-	PulsarFoxtrot ConnectionType = "pulsar_foxtrot"
+	//Pulsar key to define pulsar to foxtrot http sink
+	Pulsar ConnectionType = "pulsar"
 )
 
 func (c ConnectionType) getConfig(data []byte) interface{} {
@@ -30,6 +30,10 @@ func (c ConnectionType) getConfig(data []byte) interface{} {
 		return connConf[0]
 	case KafkaFoxtrot:
 		var connConf []*connection.KafkaFoxtrotConnConfig
+		json.Unmarshal(data, &connConf)
+		return connConf[0]
+	case Pulsar:
+		var connConf []*connection.PulsarConnConfig
 		json.Unmarshal(data, &connConf)
 		return connConf[0]
 	default:
@@ -54,6 +58,13 @@ func (c ConnectionType) Start(conf interface{}, enableDebug bool) {
 			Conf:           conf,
 		}
 		log.Println("Starting ", KafkaFoxtrot)
+		connObj.Run()
+	case Pulsar:
+		connObj := &connection.PulsarConn{
+			EnableDebugLog: enableDebug,
+			Conf:           conf,
+		}
+		log.Println("Starting ", Pulsar)
 		connObj.Run()
 	default:
 		panic("Invalid Connection Type")
