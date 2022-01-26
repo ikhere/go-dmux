@@ -3,7 +3,7 @@ FROM golang:1.12-stretch as build
 WORKDIR /app
 
 RUN apt-get update \
- && apt-get install -y ca-certificates  \
+ && apt-get install ca-certificates -y \
  && apt-get install apt-transport-https -y \
  && update-ca-certificates
 
