@@ -1,6 +1,9 @@
 package pulsar
 
-import "github.com/apache/pulsar-client-go/pulsar"
+import (
+	"encoding/json"
+	"github.com/apache/pulsar-client-go/pulsar"
+)
 
 type PulsarSource struct {
 	conf     PulsarConf
@@ -20,11 +23,35 @@ func GetPulsarSource(conf PulsarConf) *PulsarSource {
 //Generate is Source method implementation, which connects to Pulsar and pushes
 //PulsarMessage into the channel
 func (p *PulsarSource) Generate(out chan<- interface{}) {
-	client, err := pulsar.NewClient(pulsar.ClientOptions{URL: p.conf.Url})
+	// Prepare KeyFile
+	props := map[string]string{
+		"type":          "client_credentials",
+		"client_id":     p.conf.AuthClientId,
+		"client_secret": p.conf.AuthClientSecret,
+		"issuer_url":    p.conf.AuthIssuerURL,
+	}
+	privateKey, _ := json.Marshal(props)
+
+	// Build authentication
+	auth := pulsar.NewAuthenticationOAuth2(map[string]string{
+		"type":       "client_credentials",
+		"issuerUrl":  p.conf.AuthIssuerURL,
+		"audience":   p.conf.AuthAudience,
+		"privateKey": string(privateKey),
+		"clientId":   p.conf.AuthClientId,
+	})
+
+	// Authenticate client
+	client, err := pulsar.NewClient(pulsar.ClientOptions{
+		URL:            p.conf.Url,
+		Authentication: auth,
+	})
+
 	if err != nil {
 		panic(err)
 	}
 
+	// Open channel for consumer
 	channel := make(chan pulsar.ConsumerMessage, 100)
 
 	options := pulsar.ConsumerOptions{
