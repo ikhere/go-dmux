@@ -77,7 +77,8 @@ func (m *Message) BatchURL(msgs []interface{}, endpoint string, version int) str
 	for i, msg := range msgs {
 		msg := msg.(*Message)
 		if i == 0 {
-			topic = msg.Msg.Topic()
+			_topic := strings.Split(msg.Msg.Topic(), "/")
+			topic = _topic[len(_topic)-1]
 		} else {
 			builder.WriteString("~")
 		}
