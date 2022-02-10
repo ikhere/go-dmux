@@ -201,7 +201,7 @@ func (d *Dmux) run(source Source, sink Sink) {
 		select {
 		case data := <-in:
 			i := d.distribute.Distribute(data, len(ch))
-			// fmt.Printf("writing to channel %d len %d", i, len(ch[i]))
+			fmt.Printf("writing to channel %d len %d", i, len(ch[i]))
 			ch[i] <- data
 		case ctrl := <-d.control:
 			if ctrl.signal == Resize {
