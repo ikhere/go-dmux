@@ -2,6 +2,7 @@ package pulsar
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/apache/pulsar-client-go/pulsar"
 )
 
@@ -31,21 +32,24 @@ func (p *PulsarSource) Generate(out chan<- interface{}) {
 		"issuer_url":    p.conf.AuthIssuerURL,
 	}
 	privateKey, _ := json.Marshal(props)
+	fmt.Println("prepared pulsar privateKey", privateKey)
 
 	// Build authentication
 	auth := pulsar.NewAuthenticationOAuth2(map[string]string{
 		"type":       "client_credentials",
 		"issuerUrl":  p.conf.AuthIssuerURL,
 		"audience":   p.conf.AuthAudience,
-		"privateKey": string(privateKey),
+		"privateKey": fmt.Sprintf("data://%s", string(privateKey)),
 		"clientId":   p.conf.AuthClientId,
 	})
+	fmt.Println("prepared pulsar oauth2")
 
 	// Authenticate client
 	client, err := pulsar.NewClient(pulsar.ClientOptions{
 		URL:            p.conf.Url,
 		Authentication: auth,
 	})
+	fmt.Println("prepared client with authentication")
 
 	if err != nil {
 		panic(err)
