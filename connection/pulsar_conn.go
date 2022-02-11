@@ -47,6 +47,6 @@ func (c *PulsarConn) Run() {
 	d := core.GetDistribution(conf.Dmux.DistributorType, h)
 
 	dmux := core.GetDmux(conf.Dmux, d)
-	dmux.Connect(src, snk)
+	dmux.Connect(src, snk, c.EnableDebugLog)
 	dmux.Join()
 }

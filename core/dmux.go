@@ -136,8 +136,8 @@ func GetDmux(conf DmuxConf, d Distributor) *Dmux {
 }
 
 //Connect method holds Dmux logic used to Connect Source to Sink
-func (d *Dmux) Connect(source Source, sink Sink) {
-	go d.run(source, sink)
+func (d *Dmux) Connect(source Source, sink Sink, enableDebugLog bool) {
+	go d.run(source, sink, enableDebugLog)
 }
 
 //Await method added to enable testing when using bounded source
@@ -189,7 +189,7 @@ func getStopMsg() ControlMsg {
 	return c
 }
 
-func (d *Dmux) run(source Source, sink Sink) {
+func (d *Dmux) run(source Source, sink Sink, enableDebugLog bool) {
 
 	ch, wg := setup(d.size, d.sinkQSize, d.batchSize, sink, d.version)
 	in := make(chan interface{}, d.sourceQSize)
@@ -201,7 +201,9 @@ func (d *Dmux) run(source Source, sink Sink) {
 		select {
 		case data := <-in:
 			i := d.distribute.Distribute(data, len(ch))
-			// fmt.Printf("writing to channel %d len %d", i, len(ch[i]))
+			if enableDebugLog {
+				fmt.Printf("writing to channel %d len %d", i, len(ch[i]))
+			}
 			ch[i] <- data
 		case ctrl := <-d.control:
 			if ctrl.signal == Resize {

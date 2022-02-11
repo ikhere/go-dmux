@@ -53,7 +53,7 @@ func (c *KafkaFoxtrotConn) Run() {
 	d := core.GetDistribution(conf.Dmux.DistributorType, h)
 
 	dmux := core.GetDmux(conf.Dmux, d)
-	dmux.Connect(src, sk)
+	dmux.Connect(src, sk, c.EnableDebugLog)
 	dmux.Join()
 }
 
