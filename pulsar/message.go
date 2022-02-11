@@ -50,7 +50,17 @@ func (m *Message) GetDebugPath() string {
 
 // GetURL implements HTTPMsg interface
 func (m *Message) GetURL(endpoint string) string {
-	return endpoint + m.GetDebugPath()
+	var builder strings.Builder
+	_topic := strings.Split(m.Msg.Topic(), "/")
+	topic := _topic[len(_topic)-1]
+	builder.WriteString("?debug=" + topic)
+	builder.WriteString(",")
+	builder.WriteString(fmt.Sprintf("%s.%s.%s",
+		strconv.FormatInt(m.Msg.ID().EntryID(), 10),
+		strconv.FormatInt(m.Msg.ID().LedgerID(), 10),
+		strconv.FormatInt(int64(m.Msg.ID().BatchIdx()), 10)))
+	url := strings.Replace(endpoint, CustomURLKey, m.Msg.Key(), 1)
+	return url + builder.String()
 }
 
 // GetHeaders implements HTTPMsg interface
