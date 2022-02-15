@@ -9,12 +9,14 @@ import (
 	"strings"
 )
 
+// Message is a container of message and it's state
 type Message struct {
 	Msg       *pulsar.ConsumerMessage
 	Processed bool
 	Sidelined bool
 }
 
+// MessageProcessor is an interface to update Message
 type MessageProcessor interface {
 	MarkDone()
 	GetRawMsg() *pulsar.ConsumerMessage

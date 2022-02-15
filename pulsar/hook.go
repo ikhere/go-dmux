@@ -51,10 +51,10 @@ func (h *CursorHook) PreHTTPCall(msg interface{}) {
 }
 
 //PostHTTPCall is invoked - after HttpSink execution. This implementation calls
-//KafkaMessage MarkDone method on the data argument of Post, to mark this
+//Message MarkDone method on the data argument of Post, to mark this
 //message and successfully processed.
 func (h *CursorHook) PostHTTPCall(msg interface{}, success bool) {
-	data := msg.(Message)
+	data := msg.(MessageProcessor)
 	if success {
 		data.MarkDone()
 	}

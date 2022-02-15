@@ -148,13 +148,13 @@ func (h *HTTPSink) Consume(msg interface{}) {
 	// method := data.GetMethod(h.conf)
 	payload := data.GetPayload()
 	headers := data.GetHeaders(h.conf)
-	//retry Pre till you succede infinitely
+	//retry Pre till you succeed infinitely
 	h.retryPre(msg, url)
 
-	//retry Execute till you succede based on retry config
+	//retry Execute till you succeed based on retry config
 	status := h.retryExecute(h.conf.Method, url, headers, payload, responseCodeEvaluation)
 
-	//retry Post till you succede infinitely
+	//retry Post till you succeed infinitely
 	h.retryPost(msg, status, url)
 
 }
